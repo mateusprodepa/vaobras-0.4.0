@@ -46,7 +46,7 @@
 }
 
 .elemento-var i {
-  color: var(--verde);
+  color: var(--azul);
 }
 
 .spinner {
@@ -68,9 +68,8 @@
   align-items: center;
 }
 
-.red {
-  color: var(--vermelho) !important;
-}
+.red { color: var(--vermelho) !important; }
+.verde { color: var(--verde) !important; }
 
 html, body {
   background-color: #f5f5f5;
