@@ -2,7 +2,7 @@ const isNotLoading = `far fa-question-circle`;
 const isNotOk = `far fa-times-circle red`;
 const isOk = `far fa-check-circle verde`;
 const isLoading = `far spinner`;
-const URL = "http://localhost/obras4/codigo_fonte/testes_ambiente/api/testes.php";
+const URL = "http://localhost/obras_para2/codigo_fonte/ambiente_testes/api/testes.php";
 
 const closeModal = document.querySelector("#close-modal");
 const popUpBtnYes = document.querySelector("#sim");
@@ -46,6 +46,8 @@ const modulos = [
 ]
 
 function testarDados() {
+  testBtn.innerHTML = "<span class='far spinner'></span>";
+  testBtn.setAttribute("disabled", "disabled");
   for(var i in loaders) { loaders[i].className = isLoading }
   modulos.forEach(modulo => testarModulo(URL, modulo.func, modulo.loader));
   result.innerHTML +=
@@ -62,7 +64,12 @@ function testarModulo(url, obj, nome) {
     result.innerHTML += `<span>${res}</span>`;
     res.toLowerCase().includes("erro") || res === "" ? loaders[nome].className = isNotOk : loaders[nome].className = isOk;
   }).then(res => {
-    if(counter === Object.keys(loaders).length) { mudarBackground(loaders); counter = 0;};
+    if(counter === Object.keys(loaders).length) {
+      counter = 0;
+      mudarBackground(loaders);
+      testBtn.innerHTML = "CHECAR AMBIENTE";
+      testBtn.removeAttribute("disabled");
+    };
   });
 }
 
@@ -77,7 +84,7 @@ clearBtn.addEventListener("click", function() {
   for(var i in loaders) { loaders[i].className = isNotLoading }
 });
 
-result.addEventListener("DOMSubtreeModified", function() { scroll(result)});
+result.addEventListener("DOMSubtreeModified", function() { scroll(result) });
 
 function mudarBackground(loaders) {
   let areOkLoaders = 0;

@@ -19,7 +19,14 @@
     $str .= " dbname=" . $banco;
     $str .= " user=" . $usuario;
     $str .= " password=" . $senha;
-    $conexao = pg_connect($str);
+
+    if(!extension_loaded("pdo_pgsql") || !extension_loaded("pgsql")) {
+      echo "<strong style='color: #cd0000;''><i>ERRO:</i></strong> <strong>Não é possível conectar ao banco de dados sem a presença dos módulos pg_sql e pdo_pgsql</strong>. <br>";
+      return;
+    } else {
+      $conexao = pg_connect($str);
+    };
+
 
     if($conexao) {
       echo 'Conexão com o banco de dados funcionando normalmente. <br>';
@@ -113,7 +120,7 @@
   function testarRelatorios() {
     global $host, $usuario, $senha, $banco;
     $nome_pdf = md5(gerarnumeros());
-    exec("/var/www/html/obras4/codigo_fonte/relatorio/../libs/phpjasper-master/src/../bin/jasperstarter/bin/jasperstarter process '/var/www/html/obras4/codigo_fonte/relatorio/jasper/obras_por_orgao.jasper' -o '/var/www/html/obras4/codigo_fonte/testes_ambiente/api/$nome_pdf' -f pdf -P municipio='0' situacao='0' ano_exercicio='2016' orgao='54' -t postgres -u $usuario -p $senha -H $host -n $banco --db-port 5432
+    exec("/var/www/html/obras_para2/codigo_fonte/relatorio/../libs/phpjasper-master/src/../bin/jasperstarter/bin/jasperstarter process '/var/www/html/obras_para2/codigo_fonte/relatorio/jasper/obras_por_orgao.jasper' -o '/var/www/html/obras4/codigo_fonte/testes_ambiente/api/$nome_pdf' -f pdf -P municipio='0' situacao='0' ano_exercicio='2016' orgao='54' -t postgres -u $usuario -p $senha -H $host -n $banco --db-port 5432
 ");
 
     if(file_exists($nome_pdf . ".pdf")) {
