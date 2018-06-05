@@ -71,22 +71,33 @@
   }
 
   function testarPermissoes() {
-    $tmp = is_writable("../../relatorio/tmp");
-    $templates = is_writable("../../templates");
-    $uploads = is_writable("../../uploads");
+      $tmpDir = "../../relatorio/tmp";
+      $templatesDir = "../../templates";
+      $uploadsDir = "../../uploads";
 
-    permissions($tmp, "tmp");
-    permissions($templates, "templates");
-    permissions($uploads, "uploads");
+      $dirArr = [
+        $tmpDir,
+        $templatesDir,
+        $uploadsDir
+      ];
+
+      foreach ($dirArr as $key) {
+        if(is_dir($key)) {
+          $t = is_writable($key);
+          permissions($t, $key);
+        } else {
+          echo "<strong style='color: #cd0000;''><i>ERRO:</i></strong> O diretório <strong>\"$key\"</strong> não existe <br>";
+        }
+      }
   }
 
   function permissions($dir, $nome) {
-    if($dir) {
-      echo "Permissão para a pasta <strong>\"$nome\"</strong> concedida e funcionando normalmente. <br>";
-    } else {
-      echo "<strong style='color: #cd0000;''><i>ERRO:</i></strong> A pasta <strong>\"$nome\"</strong> não contém permissões de escrita. <br>";
+      if($dir) {
+          echo "Permissão para a pasta <strong>\"$nome\"</strong> concedida e funcionando normalmente. <br>";
+      } else {
+          echo "<strong style='color: #cd0000;''><i>ERRO:</i></strong> A pasta <strong>\"$nome\"</strong> não contém permissões de escrita. <br>";
+      }
     }
-  }
 
   function testarModulos() {
     gerarModulos(PHP_MODULES);
@@ -120,7 +131,7 @@
   function testarRelatorios() {
     global $host, $usuario, $senha, $banco;
     $nome_pdf = md5(gerarnumeros());
-    exec("/var/www/html/obras_para2/codigo_fonte/relatorio/../libs/phpjasper-master/src/../bin/jasperstarter/bin/jasperstarter process '/var/www/html/obras_para2/codigo_fonte/relatorio/jasper/obras_por_orgao.jasper' -o '/var/www/html/obras4/codigo_fonte/testes_ambiente/api/$nome_pdf' -f pdf -P municipio='0' situacao='0' ano_exercicio='2016' orgao='54' -t postgres -u $usuario -p $senha -H $host -n $banco --db-port 5432
+    exec(__DIR__ . "/../../libs/phpjasper-master/bin/jasperstarter/bin/jasperstarter process " . __DIR__ . "'/../../relatorio/jasper/obras_por_orgao.jasper' -o" . __DIR__ . "'/$nome_pdf' -f pdf -P municipio='0' situacao='0' ano_exercicio='2016' orgao='54' -t postgres -u $usuario -p $senha -H $host -n $banco --db-port 5432
 ");
 
     if(file_exists($nome_pdf . ".pdf")) {
