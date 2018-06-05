@@ -1,8 +1,5 @@
 <?php
   require_once "../../../config/config.php";
-  require_once "../../libs/phpjasper-master/src/PHPJasper.php";
-
-  use PHPJasper\PHPJasper;
 
   // Variáveis do banco de dados
   $host = CONF_BD_SERVER;
@@ -131,7 +128,9 @@
   function testarRelatorios() {
     global $host, $usuario, $senha, $banco;
     $nome_pdf = md5(gerarnumeros());
-    exec(__DIR__ . "/../../libs/phpjasper-master/bin/jasperstarter/bin/jasperstarter process " . __DIR__ . "'/../../relatorio/jasper/obras_por_orgao.jasper' -o" . __DIR__ . "'/$nome_pdf' -f pdf -P municipio='0' situacao='0' ano_exercicio='2016' orgao='54' -t postgres -u $usuario -p $senha -H $host -n $banco --db-port 5432
+    exec(__DIR__ . "/../../libs/phpjasper-master/bin/jasperstarter/bin/jasperstarter process " . 
+         __DIR__ . "'/../../relatorio/jasper/obras_por_orgao.jasper' -o" . 
+         __DIR__ . "'/$nome_pdf' -f pdf -P municipio='0' situacao='0' ano_exercicio='2016' orgao='54' -t postgres -u $usuario -p $senha -H $host -n $banco --db-port 5432
 ");
 
     if(file_exists($nome_pdf . ".pdf")) {
