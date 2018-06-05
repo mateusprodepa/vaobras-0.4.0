@@ -86,7 +86,7 @@
           $t = is_writable($key);
           permissions($t, $key);
         } else {
-          echo "<strong style='color: #cd0000;''><i>ERRO:</i></strong> O diretório <strong>\"$key\"</strong> não existe <br>";
+          echo "<strong style='color: #cd0000;''><i>ERRO:</i></strong> A pasta <strong>\"$key\"</strong> não foi encontrada neste diretório. <br>";
         }
       }
   }
