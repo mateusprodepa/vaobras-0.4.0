@@ -18,7 +18,7 @@
     $str .= " password=" . $senha;
 
     if(!extension_loaded("pdo_pgsql") || !extension_loaded("pgsql")) {
-      echo "<strong style='color: #cd0000;''><i>ERRO:</i></strong> <strong>Não é possível conectar ao banco de dados sem a presença dos módulos pg_sql e pdo_pgsql</strong>. <br>";
+      echo "<strong style='color: #e74c3c;''><i>ERRO:</i></strong> <strong>Não é possível conectar ao banco de dados sem a presença dos módulos pg_sql e pdo_pgsql</strong>. <br>";
       return;
     } else {
       $conexao = pg_connect($str);
@@ -28,7 +28,7 @@
     if($conexao) {
       echo 'Conexão com o banco de dados funcionando normalmente. <br>';
     } else {
-      echo "<strong style='color: #cd0000;''><i>ERRO:</i></strong> <strong>Não foi possível conectar ao banco de dados</strong>. <br>";
+      echo "<strong style='color: #e74c3c;''><i>ERRO:</i></strong> <strong>Não foi possível conectar ao banco de dados</strong>. <br>";
     }
 
     $q1 = "SELECT 'Contratos'
@@ -64,7 +64,7 @@
       }
 
       echo "A pasta $nome deve conter <strong>$n</strong> arquivos. <br>";
-    } else { echo "<strong style=\"color: #cd0000;\"><i>ERRO:</i></strong> Falha ao realizar a query na tabela $nome. <br>"; }
+    } else { echo "<strong style=\"color: #e74c3c;\"><i>ERRO:</i></strong> Falha ao realizar a query na tabela $nome. <br>"; }
   }
 
   function testarPermissoes() {
@@ -83,7 +83,7 @@
           $t = is_writable($key);
           permissions($t, $key);
         } else {
-          echo "<strong style='color: #cd0000;''><i>ERRO:</i></strong> A pasta <strong>\"$key\"</strong> não foi encontrada neste diretório. <br>";
+          echo "<strong style='color: #e74c3c;''><i>ERRO:</i></strong> A pasta <strong>\"$key\"</strong> não foi encontrada neste diretório. <br>";
         }
       }
   }
@@ -92,7 +92,7 @@
       if($dir) {
           echo "Permissão para a pasta <strong>\"$nome\"</strong> concedida e funcionando normalmente. <br>";
       } else {
-          echo "<strong style='color: #cd0000;''><i>ERRO:</i></strong> A pasta <strong>\"$nome\"</strong> não contém permissões de escrita. <br>";
+          echo "<strong style='color: #e74c3c;''><i>ERRO:</i></strong> A pasta <strong>\"$nome\"</strong> não contém permissões de escrita. <br>";
       }
     }
 
@@ -120,7 +120,7 @@
       if(extension_loaded($key)) {
         echo "O módulo <strong>\"$key\"</strong> está habilitado. <br>";
       } else {
-        echo "<strong style=\"color: #cd0000;\"><i>ERRO:</i></strong> O módulo <strong>\"$key\"</strong> não está habilitado. <br>";
+        echo "<strong style=\"color: #e74c3c;\"><i>ERRO:</i></strong> O módulo <strong>\"$key\"</strong> não está habilitado. <br>";
       }
     }
   }
@@ -128,8 +128,8 @@
   function testarRelatorios() {
     global $host, $usuario, $senha, $banco;
     $nome_pdf = md5(gerarnumeros());
-    exec(__DIR__ . "/../../libs/phpjasper-master/bin/jasperstarter/bin/jasperstarter process " . 
-         __DIR__ . "'/../../relatorio/jasper/obras_por_orgao.jasper' -o" . 
+    exec(__DIR__ . "/../../libs/phpjasper-master/bin/jasperstarter/bin/jasperstarter process " .
+         __DIR__ . "'/../../relatorio/jasper/obras_por_orgao.jasper' -o" .
          __DIR__ . "'/$nome_pdf' -f pdf -P municipio='0' situacao='0' ano_exercicio='2016' orgao='54' -t postgres -u $usuario -p $senha -H $host -n $banco --db-port 5432
 ");
 
@@ -137,7 +137,7 @@
       echo "O gerador de relatórios está funcionando normalmente. <br>";
       unlink($nome_pdf . ".pdf");
     } else {
-      echo "<strong style=\"color: #cd0000;\"><i>ERRO:</i></strong> O gerador de relatórios não conseguiu gerar um pdf. <br>";
+      echo "<strong style=\"color: #e74c3c;\"><i>ERRO:</i></strong> O gerador de relatórios não conseguiu gerar um pdf. <br>";
     }
   }
 
